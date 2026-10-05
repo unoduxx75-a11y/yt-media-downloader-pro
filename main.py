@@ -20,7 +20,7 @@ APP_VERSION = "1.0.0"
 UPDATE_CHECK_URL = "https://raw.githubusercontent.com/unoduxx75-a11y/yt-downloader-pro/main/version.json"
 
 def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
+    """ Get absolute path to resource, works for Windows, macOS, and Linux PyInstaller binaries """
     try:
         base_path = sys._MEIPASS
     except Exception:
@@ -48,7 +48,7 @@ QFrame#HeaderCard {
 }
 QLabel {
     color: #E2E8F0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif;
     background: transparent;
 }
 QLabel#TitleLabel {
@@ -408,7 +408,7 @@ class SettingsModal(QDialog):
         title_box = QVBoxLayout()
         title = QLabel("YT Downloader Pro")
         title.setObjectName("TitleLabel")
-        subtitle = QLabel(f"Version {APP_VERSION} • High Speed Media Downloader")
+        subtitle = QLabel(f"Version {APP_VERSION} • Cross-Platform Media Downloader")
         subtitle.setObjectName("SubtitleLabel")
         title_box.addWidget(title)
         title_box.addWidget(subtitle)
@@ -421,7 +421,7 @@ class SettingsModal(QDialog):
         info_box.setObjectName("CardFrame")
         ib_layout = QVBoxLayout(info_box)
         ib_layout.addWidget(QLabel("<b>Developer:</b> UNO XEO"))
-        ib_layout.addWidget(QLabel("<b>License:</b> Free & Open Source"))
+        ib_layout.addWidget(QLabel("<b>Platforms:</b> Windows, macOS, Linux"))
         ib_layout.addWidget(QLabel("<b>Auto Updater:</b> Enabled (GitHub Releases)"))
         layout.addWidget(info_box)
 
@@ -451,7 +451,7 @@ class MainWindow(QMainWindow):
         self.resize(960, 620)
         self.setMinimumSize(880, 560)
 
-        # Set App Icon (White Cat)
+        # Set App Icon (Cross-platform support)
         icon_path = resource_path("app_icon.png")
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
@@ -466,7 +466,7 @@ class MainWindow(QMainWindow):
         self.save_directory = str(Path.home() / "Downloads")
         self.init_ui()
 
-        # Check for updates in background without delaying launch speed
+        # Check for updates asynchronously
         self.checker = UpdateCheckerWorker()
         self.checker.update_found_signal.connect(self.on_update_found)
         self.checker.start()
